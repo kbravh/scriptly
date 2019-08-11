@@ -14,7 +14,6 @@ function App() {
       <div className="container center">
         <h2>Please enter your patriarchal blessing information below.</h2>
         <BlessingForm />
-        <p>We know that your patriarchal blessing is something sacred; all files are generated in your browser and never touch our servers.</p>
       </div>
     </div>
   );
