@@ -17,7 +17,6 @@ export default class BlessingForm extends Component {
     super(props)
     this.state = {
       blessingDate: new Date(),
-      birthDate: new Date(),
       firstName: null,
       middleName: null,
       lastName: null,
@@ -27,14 +26,38 @@ export default class BlessingForm extends Component {
       stake: null,
       birthplace: null,
       gender: 'Female',
+      blessing: ''
     }
   }
 
-  handleBirthDateChange = birthDate => {
-    this.setState({
-      birthDate
-    })
+  getParentage = () => {
+    let parentage = ","
+    let father = this.state.fatherName != null && this.state.fatherName !== ""
+    let mother = this.state.motherName != null && this.state.motherName !== ""
+    let gender = this.state.gender === "Female" ? 'hija' : 'hijo'
+
+    if(!father && !mother){
+      return ""
+    }
+    parentage += gender + "de "
+    parentage += father && mother ? this.state.fatherName + "y " + this.state.motherName : this.state.fatherName+this.state.motherName
+    return parentage
   }
+
+  splitBlessing = () => {
+    // split the verses on new lines
+    let verses = this.state.blessing.split('\n')
+    // add verse numbers to all except first verse
+    verses = verses.map((verse, i) => {
+      if(i==0){
+        return verse
+      }else{
+        return i+1 + '. ' + verse
+      }
+    })
+    return verses;
+  }
+
   handleBlessingDateChange = blessingDate => {
     this.setState({
       blessingDate
@@ -55,47 +78,10 @@ export default class BlessingForm extends Component {
 
   handleSubmit = () => {
     let fullName = this.state.firstName + this.state.middleName + this.state.lastName
-    let parentage = `, hijo de ${this.state.fatherName} y ${this.state.motherName}`
+    let parentage = this.getParentage()
+    let blessing = this.splitBlessing()
 
-    utils.getBinaryContent('public/es.docx', (err, data) => {
-      if (err) {
-        throw err;
-      }
-      console.log(data)
-      let zip = new pizzip(data);
-      zip.file("es.docx", data, {binary:true});
-      let doc = new docxtemplater().loadZip(zip);
-
-      doc.setData({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        patriarchName: this.state.patriarchName,
-        fullName,
-        parentage,
-        blessingFirstLetter: 'K',
-        blessing: this.state.blessing
-      });
-      try {
-        // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-        doc.render()
-      }
-      catch (error) {
-        let e = {
-          message: error.message,
-          name: error.name,
-          stack: error.stack,
-          properties: error.properties,
-        }
-        console.log(JSON.stringify({ error: e }));
-        // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-        throw error;
-      }
-      let out = doc.getZip().generate({
-        type: "blob",
-        mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      }) //Output the document using Data-URI
-      saveAs(out, "output.docx")
-    })
+    //call out to API and return download link
   }
 
   render() {
@@ -117,13 +103,6 @@ export default class BlessingForm extends Component {
             <div className="input-field col s12 m4">
               <input placeholder="Last Name" id="lastName" name="lastName" type="text" />
               <label htmlFor="lastName">Last Name</label>
-            </div>
-
-            <div className="col s12 m6">
-              <div className="row">
-                <span className="col s12 m6">Birth Date</span>
-                <DatePicker className="col s12 m6" value={this.state.birthDate} onChange={this.handleBirthDateChange} />
-              </div>
             </div>
 
             <div className="col s12 m6">
