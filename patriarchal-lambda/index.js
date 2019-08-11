@@ -57,10 +57,11 @@ exports.handler = async (event) => {
     console.log('buffer generated successfully')
 
     //TODO- convert to pdf
+    let time = new Date().getTime()
 
     let uploadPromise = s3.upload({
         Bucket: 'patriarchal-files',
-        Key: 'test-file.docx', // TODO- set this key to full name plus random
+        Key: `${event.fullName}-${time}.docx`,
         Body: buf,
         ContentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     }).promise();
