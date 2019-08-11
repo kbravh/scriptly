@@ -4,16 +4,16 @@ exports.handler = async (event) => {
         region: 'us-east-1'
     })
     var s3 = new AWS.S3({apiVersion: '2006-03-01'});
-    
+
     var PizZip = require('pizzip');
     var Docxtemplater = require('docxtemplater');
 
     var fs = require('fs');
     var path = require('path');
-    
+
     //Load the docx file as a binary
-    var content = fs.readFileSync(path.resolve(__dirname, 'es.docx'), 'binary');
-    
+    var content = fs.readFileSync(path.resolve(__dirname, `${event.language}.docx`), 'binary');
+
     var zip = new PizZip(content);
 
     var doc = new Docxtemplater();
@@ -25,11 +25,11 @@ exports.handler = async (event) => {
         lastName: event.lastName,
         fullName: event.fullName,
         patriarchName: event.patriarchName,
-        stakeName: event.stake,
+        stakeName: event.stakeName,
         parentage: event.parentage,
-        blessingFirstLetter: event.firstLetter,
+        blessingFirstLetter: event.blessingFirstLetter,
         blessing: event.blessing,
-        memberName: event.memberName,
+        memberTitle: event.memberTitle,
         blessingDate: event.blessingDate
     });
 
@@ -46,7 +46,6 @@ exports.handler = async (event) => {
         console.log(JSON.stringify({
             error: e
         }));
-        // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
         throw error;
     }
 
@@ -57,20 +56,23 @@ exports.handler = async (event) => {
         });
     console.log('buffer generated successfully')
 
+    //TODO- convert to pdf
+
     let uploadPromise = s3.upload({
         Bucket: 'patriarchal-files',
-        Key: 'test-file.docx',
+        Key: 'test-file.docx', // TODO- set this key to full name plus random
         Body: buf,
         ContentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     }).promise();
-    
-    let response = {
-        statusCode: 200,
-        body: JSON.stringify('Hello from Lambda!'),
-    };
+
+    let response
+
     await uploadPromise.then(data => {
         console.log("Success!", data);
-        response.body = JSON.stringify(data)
+        response =  {
+        statusCode: 200,
+        body: JSON.stringify(data)
+    }
     }).catch(err => {
         console.log(err)
     })
