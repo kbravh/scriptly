@@ -5,12 +5,7 @@ import { faVenus } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-date-picker';
 import Toggle from 'react-toggle';
 
-import * as pizzip from 'pizzip';
-import * as docxtemplater from 'docxtemplater';
-import { saveAs } from 'file-saver';
-
 import './BlessingForm.scss';
-const utils = require('pizzip/utils');
 
 export default class BlessingForm extends Component {
   constructor(props) {
@@ -36,11 +31,11 @@ export default class BlessingForm extends Component {
     let mother = this.state.motherName != null && this.state.motherName !== ""
     let gender = this.state.gender === "Female" ? 'hija' : 'hijo'
 
-    if(!father && !mother){
+    if (!father && !mother) {
       return ""
     }
     parentage += gender + "de "
-    parentage += father && mother ? this.state.fatherName + "y " + this.state.motherName : this.state.fatherName+this.state.motherName
+    parentage += father && mother ? this.state.fatherName + "y " + this.state.motherName : this.state.fatherName + this.state.motherName
     return parentage
   }
 
@@ -49,10 +44,10 @@ export default class BlessingForm extends Component {
     let verses = this.state.blessing.split('\n')
     // add verse numbers to all except first verse
     verses = verses.map((verse, i) => {
-      if(i==0){
+      if (i === 0) {
         return verse
-      }else{
-        return i+1 + '. ' + verse
+      } else {
+        return i + 1 + '. ' + verse
       }
     })
     return verses;
@@ -147,6 +142,11 @@ export default class BlessingForm extends Component {
                   }} />
                 <span>{this.state.gender}</span>
               </label>
+            </div>
+
+            <div className="input-field col s12">
+              <textarea id="blessing" className="materialize-textarea" onChange={this.handleInputChange}></textarea>
+              <label htmlFor="blessing">Blessing text. Separate each paragraph with a new line.</label>
             </div>
 
             <span className="waves-effect waves-light btn" onClick={this.handleSubmit}>Generate Document</span>
