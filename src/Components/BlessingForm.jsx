@@ -40,7 +40,7 @@ export default class BlessingForm extends Component {
 
   splitBlessing = () => {
     // trim off initial and final whitespace, make sure there are only single new lines between paragraphs
-    let blessing = this.state.blessing.trim().replace(/\n+/g,'\n')
+    let blessing = this.state.blessing.trim().replace(/\n+/g, '\n')
     // extract first letter
     let firstLetter = blessing.substr(0, 1)
     blessing = blessing.substring(1)
@@ -58,7 +58,7 @@ export default class BlessingForm extends Component {
   }
 
   getMemberName = () => {
-    return this.state.gender == 'Female' ? ' la Hermana' : 'l Hermano'
+    return this.state.gender === 'Female' ? ' la Hermana' : 'l Hermano'
   }
 
   handleBlessingDateChange = blessingDate => {
@@ -111,7 +111,7 @@ export default class BlessingForm extends Component {
           <div className="row">
 
             <div className="input-field col s12 m4">
-              <input id="firstName" name="firstName" type="text" onChange={this.handleInputChange} />
+              <input id="firstName" name="firstName" type="text" onChange={this.handleInputChange} required />
               <label htmlFor="firstName">First Name</label>
             </div>
 
@@ -121,7 +121,7 @@ export default class BlessingForm extends Component {
             </div>
 
             <div className="input-field col s12 m4">
-              <input id="lastName" name="lastName" type="text" onChange={this.handleInputChange} />
+              <input id="lastName" name="lastName" type="text" onChange={this.handleInputChange} required />
               <label htmlFor="lastName">Last Name</label>
             </div>
 
@@ -146,13 +146,13 @@ export default class BlessingForm extends Component {
             </div>
 
             <div className="input-field col s12">
-              <input id="patriarchName" name="patriarchName" type="text" onChange={this.handleInputChange} />
+              <input id="patriarchName" name="patriarchName" type="text" onChange={this.handleInputChange} required />
               <label htmlFor="patriarchName">Patriarch's Full Name</label>
             </div>
 
             <div className="input-field col s12 m6">
-              <input id="stake" name="stake" type="text" onChange={this.handleInputChange} />
-              <label htmlFor="stake">Stake</label>
+              <input id="stake" name="stake" type="text" onChange={this.handleInputChange} required />
+              <label htmlFor="stake">Stake or District</label>
             </div>
 
             <div className="col s12 m6">
@@ -169,7 +169,12 @@ export default class BlessingForm extends Component {
             </div>
 
             <div className="input-field col s12">
-              <textarea id="blessing" name="blessing" className="materialize-textarea" onChange={this.handleInputChange}></textarea>
+              <textarea
+                id="blessing"
+                name="blessing"
+                className="materialize-textarea"
+                onChange={this.handleInputChange}
+                required></textarea>
               <label htmlFor="blessing">Blessing text</label>
               <span className="grey-text">Separate each paragraph with a new line.</span>
             </div>
