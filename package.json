@@ -13,7 +13,7 @@
     "node-sass": "^4.12.0",
     "pizzip": "^3.0.5",
     "react": "^16.8.6",
-    "react-date-picker": "^7.8.1",
+    "react-calendar": "^2.19.1",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
     "react-toggle": "^4.0.2"

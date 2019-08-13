@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars } from '@fortawesome/free-solid-svg-icons';
 import { faVenus } from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-date-picker';
+import Calendar from 'react-calendar'
 import Toggle from 'react-toggle';
 
 import './BlessingForm.scss';
@@ -19,7 +19,6 @@ export default class BlessingForm extends Component {
       motherName: null,
       patriarchName: null,
       stake: null,
-      birthplace: null,
       gender: 'Female',
       blessing: ''
     }
@@ -82,7 +81,7 @@ export default class BlessingForm extends Component {
   render() {
     return (
       <div className="row">
-        <form className="col s12 m8">
+        <form className="col s11">
           <div className="row">
 
             <div className="input-field col s12 m4">
@@ -100,24 +99,27 @@ export default class BlessingForm extends Component {
               <label htmlFor="lastName">Last Name</label>
             </div>
 
-            <div className="col s12 m6">
+            <div className="col s12" id="blessing-date-title">
+              Blessing Date
+            </div>
+
+            <div className="col s12">
               <div className="row">
-                <span className="col s12 m6">Blessing Date</span>
-                <DatePicker className="col s12 m6" value={this.state.blessingDate} onChange={this.handleBlessingDateChange} />
+                <Calendar value={this.state.blessingDate} onChange={this.handleBlessingDateChange} />
               </div>
             </div>
 
-            <div className="input-field col s12 m6">
+            <div className="input-field col s12">
               <input placeholder="Father's Full Name" id="fatherName" name="fatherName" type="text" />
               <label htmlFor="fatherName">Father's Full Name</label>
             </div>
 
-            <div className="input-field col s12 m6">
+            <div className="input-field col s12">
               <input placeholder="Mother's Full Name" id="motherName" name="motherName" type="text" />
               <label htmlFor="motherName">Mother's Full Name</label>
             </div>
 
-            <div className="input-field col s12 m6">
+            <div className="input-field col s12">
               <input placeholder="Patriarch's Full Name" id="patriarchName" name="patriarchName" type="text" />
               <label htmlFor="patriarchName">Patriarch's Full Name</label>
             </div>
@@ -127,12 +129,8 @@ export default class BlessingForm extends Component {
               <label htmlFor="stake">Stake</label>
             </div>
 
-            <div className="input-field col s12 m6">
-              <input placeholder="Birthplace" id="birthplace" name="birthplace" type="text" />
-              <label htmlFor="birthplace">Birthplace</label>
-            </div>
-
-            <div className="col s6">
+            <div className="col s12 m6">
+              <div className="grey-text">Gender</div>
               <label>
                 <Toggle id="gender-toggle"
                   onChange={this.handleGenderChange}
@@ -140,19 +138,21 @@ export default class BlessingForm extends Component {
                     checked: <FontAwesomeIcon icon={faMars} color="white" />,
                     unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
                   }} />
-                <span>{this.state.gender}</span>
+                <div>{this.state.gender}</div>
               </label>
             </div>
 
             <div className="input-field col s12">
               <textarea id="blessing" className="materialize-textarea" onChange={this.handleInputChange}></textarea>
-              <label htmlFor="blessing">Blessing text. Separate each paragraph with a new line.</label>
+              <label htmlFor="blessing">Blessing text</label>
+              <span className="grey-text">Separate each paragraph with a new line.</span>
             </div>
 
-            <span className="waves-effect waves-light btn" onClick={this.handleSubmit}>Generate Document</span>
+          </div>
+          <div className="row">
+            <span className="blue-grey waves-effect waves-light btn col s12" onClick={this.handleSubmit}>Generate Document</span>
           </div>
         </form>
-        <div className="preview col s12 m4">I'm a preview</div>
       </div>
     )
   }
