@@ -28,7 +28,7 @@ export default class BlessingForm extends Component {
     let parentage = ","
     let father = this.state.fatherName !== ""
     let mother = this.state.motherName !== ""
-    let gender = this.state.gender === "Female" ? 'hija' : 'hijo'
+    let gender = this.state.gender === "Female" ? 'daughter' : 'son'
 
     if (!father && !mother) {
       return ""
@@ -58,7 +58,7 @@ export default class BlessingForm extends Component {
   }
 
   getMemberName = () => {
-    return this.state.gender === 'Female' ? ' la Hermana' : 'l Hermano'
+    return this.state.gender === 'Female' ? ' Sister' : ' Brother'
   }
 
   handleBlessingDateChange = blessingDate => {
@@ -100,7 +100,8 @@ export default class BlessingForm extends Component {
       patriarchName: this.state.patriarchName,
       stakeName: this.state.stake,
       firstName: this.state.firstName.toUpperCase(),
-      memberName
+      memberName,
+      template: 'es'
     }
   }
 
@@ -131,7 +132,7 @@ export default class BlessingForm extends Component {
 
             <div className="col s12">
               <div className="row">
-                <Calendar value={this.state.blessingDate} onChange={this.handleBlessingDateChange} />
+                <Calendar value={this.state.blessingDate} onChange={this.handleBlessingDateChange} locale="en" />
               </div>
             </div>
 
