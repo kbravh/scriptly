@@ -4,8 +4,11 @@ import { faMars } from '@fortawesome/free-solid-svg-icons';
 import { faVenus } from '@fortawesome/free-solid-svg-icons';
 import Calendar from 'react-calendar'
 import Toggle from 'react-toggle';
+import Axios from "axios";
 
 import './BlessingForm.scss';
+
+const moment = require("moment");
 
 export default class BlessingForm extends Component {
   constructor(props) {
@@ -61,6 +64,12 @@ export default class BlessingForm extends Component {
     return this.state.gender === 'Female' ? ' Sister' : ' Brother'
   }
 
+  formatDate = () => {
+    // moment.js date object
+    let dateWrapper = moment(this.state.blessingDate)
+    return dateWrapper.format('LL')
+  }
+
   handleBlessingDateChange = blessingDate => {
     this.setState({
       blessingDate
@@ -79,30 +88,40 @@ export default class BlessingForm extends Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     let fullName = this.state.middleName ?
       `${this.state.firstName} ${this.state.middleName} ${this.state.lastName}` :
       `${this.state.firstName} ${this.state.lastName}`
     let parentage = this.getParentage()
     let [blessingFirstLetter, blessing] = this.splitBlessing()
     let memberName = this.getMemberName()
-    // TODO - format date based on language
-    // TODO - format member name based on language and gender
+    let dateString = this.formatDate()
 
-    //call out to API and return download link
     let packet = {
       fullName,
       parentage,
       blessingFirstLetter,
       blessing,
+      blessingDate: dateString,
       motherName: this.state.motherName,
       fatherName: this.state.fatherName,
       patriarchName: this.state.patriarchName,
       stakeName: this.state.stake,
       firstName: this.state.firstName.toUpperCase(),
       memberName,
-      template: 'es'
+      template: 'en'
     }
+
+    console.log(packet)
+
+    //call out to API and return download link
+    const response = await Axios.post(
+      'https://api.restorerofpaths.com/patriarchal',
+      packet,
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+    console.log(response.data)
+
   }
 
   render() {
