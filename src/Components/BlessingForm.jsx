@@ -102,8 +102,6 @@ export default class BlessingForm extends Component {
       template: 'en'
     }
 
-    console.log(packet)
-
     //call out to API and return download link
     const response = await Axios.post(
       'https://api.restorerofpaths.com/patriarchal',
