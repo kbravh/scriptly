@@ -83,22 +83,21 @@ export default class BlessingForm extends Component {
 
     let [blessingFirstLetter, blessing] = this.splitBlessing(values.blessing)
 
-    let memberName = this.getMemberName()
+    let memberTitle = this.getMemberName()
 
     let dateString = this.formatDate()
 
     let packet = {
+      firstName: values.firstName.toUpperCase(),
+      lastName: values.lastName,
       fullName,
+      patriarch: values.patriarch,
+      stake: values.stake,
       parentage,
       blessingFirstLetter,
       blessing,
-      blessingDate: dateString,
-      motherName: values.mother,
-      fatherName: values.father,
-      patriarchName: values.patriarch,
-      stakeName: values.stake,
-      firstName: values.firstName.toUpperCase(),
       memberName,
+      blessingDate: dateString,
       template: 'en'
     }
 

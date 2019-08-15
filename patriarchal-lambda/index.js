@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     var path = require('path');
 
     //Load the docx file as a binary
-    var content = fs.readFileSync(path.resolve(__dirname, `${event.language}.docx`), 'binary');
+    var content = fs.readFileSync(path.resolve(__dirname, `${event.template}.docx`), 'binary');
 
     var zip = new PizZip(content);
 
@@ -24,8 +24,8 @@ exports.handler = async (event) => {
         firstName: event.firstName,
         lastName: event.lastName,
         fullName: event.fullName,
-        patriarchName: event.patriarchName,
-        stakeName: event.stakeName,
+        patriarchName: event.patriarch,
+        stakeName: event.stake,
         parentage: event.parentage,
         blessingFirstLetter: event.blessingFirstLetter,
         blessing: event.blessing,
