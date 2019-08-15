@@ -17,7 +17,8 @@ export default class BlessingForm extends Component {
     super(props)
     this.state = {
       blessingDate: new Date(),
-      gender: "Female"
+      gender: "Female",
+      downloadUrl: ""
     }
   }
 
@@ -109,8 +110,11 @@ export default class BlessingForm extends Component {
       packet,
       { headers: { 'Content-Type': 'application/json' } }
     )
-    console.log(response.data)
 
+    let respBody = JSON.parse(response.data.body)
+    this.setState({
+      downloadUrl: respBody.Location
+    })
   }
 
   render() {
@@ -162,7 +166,16 @@ export default class BlessingForm extends Component {
 
               <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" />
               <ErrorMessage name="blessing" component="div" />
-              <button className="btn btn-primary" type="submit" disabled={isSubmitting}>Generate Document</button>
+              <button className="waves-effect waves-light btn blue-grey" type="submit" disabled={isSubmitting}>Generate Document</button>
+              {this.state.downloadUrl &&
+                <a
+                  className="waves-effect waves-light btn blue-grey"
+                  href={this.state.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  Download Document
+                </a>
+              }
             </Form>
           )}
         </Formik>
