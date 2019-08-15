@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars } from '@fortawesome/free-solid-svg-icons';
 import { faVenus } from '@fortawesome/free-solid-svg-icons';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import Calendar from 'react-calendar'
 import Toggle from 'react-toggle';
 import Axios from "axios";
@@ -15,40 +17,32 @@ export default class BlessingForm extends Component {
     super(props)
     this.state = {
       blessingDate: new Date(),
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      fatherName: "",
-      motherName: "",
-      patriarchName: "",
-      stake: "",
-      gender: 'Female',
-      blessing: ''
+      gender: "Female"
     }
   }
 
-  getParentage = () => {
+  getParentage = (motherName, fatherName) => {
     let parentage = ","
-    let father = this.state.fatherName !== ""
-    let mother = this.state.motherName !== ""
+    let father = fatherName !== ""
+    let mother = motherName !== ""
     let gender = this.state.gender === "Female" ? 'daughter' : 'son'
 
     if (!father && !mother) {
       return ""
     }
-    parentage += gender + " de "
-    parentage += father && mother ? this.state.fatherName + " y " + this.state.motherName : this.state.fatherName + this.state.motherName
+    parentage += gender + " of "
+    parentage += father && mother ? fatherName + " y " + motherName : fatherName + motherName
     return parentage
   }
 
-  splitBlessing = () => {
+  splitBlessing = (blessing) => {
     // trim off initial and final whitespace, make sure there are only single new lines between paragraphs
-    let blessing = this.state.blessing.trim().replace(/\n+/g, '\n')
+    let blessingTrimmed = blessing.trim().replace(/\n+/g, '\n')
     // extract first letter
-    let firstLetter = blessing.substr(0, 1)
-    blessing = blessing.substring(1)
+    let firstLetter = blessingTrimmed.substr(0, 1)
+    blessingTrimmed = blessingTrimmed.substring(1)
     // split the verses on new lines
-    let verses = blessing.split('\n')
+    let verses = blessingTrimmed.split('\n')
     // add verse numbers to all except first verse
     verses = verses.map((verse, i) => {
       if (i === 0) {
@@ -70,7 +64,7 @@ export default class BlessingForm extends Component {
     return dateWrapper.format('LL')
   }
 
-  handleBlessingDateChange = blessingDate => {
+  handleCalendarChange = blessingDate => {
     this.setState({
       blessingDate
     })
@@ -80,21 +74,17 @@ export default class BlessingForm extends Component {
       gender: e.target.checked ? 'Male' : 'Female'
     })
   }
+  handleSubmit = async (values) => {
+    let fullName = values.middleName ?
+      `${values.firstName} ${values.middle} ${values.lastName}` :
+      `${values.firstName} ${values.lastName}`
 
-  //update the values on all the text fields
-  handleInputChange = field => {
-    this.setState({
-      [field.target.name]: field.target.value
-    });
-  };
+    let parentage = this.getParentage(values.mother, values.father)
 
-  handleSubmit = async () => {
-    let fullName = this.state.middleName ?
-      `${this.state.firstName} ${this.state.middleName} ${this.state.lastName}` :
-      `${this.state.firstName} ${this.state.lastName}`
-    let parentage = this.getParentage()
-    let [blessingFirstLetter, blessing] = this.splitBlessing()
+    let [blessingFirstLetter, blessing] = this.splitBlessing(values.blessing)
+
     let memberName = this.getMemberName()
+
     let dateString = this.formatDate()
 
     let packet = {
@@ -103,11 +93,11 @@ export default class BlessingForm extends Component {
       blessingFirstLetter,
       blessing,
       blessingDate: dateString,
-      motherName: this.state.motherName,
-      fatherName: this.state.fatherName,
-      patriarchName: this.state.patriarchName,
-      stakeName: this.state.stake,
-      firstName: this.state.firstName.toUpperCase(),
+      motherName: values.mother,
+      fatherName: values.father,
+      patriarchName: values.patriarch,
+      stakeName: values.stake,
+      firstName: values.firstName.toUpperCase(),
       memberName,
       template: 'en'
     }
@@ -127,83 +117,56 @@ export default class BlessingForm extends Component {
   render() {
     return (
       <div className="row">
-        <form className="col s11">
-          <div className="row">
+        <Formik
+          initialValues={{
+            firstName: '', middle: '', lastName: '',
+            mother: '', father: '',
+            patriarch: '', stake: '', blessing: ''
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            this.handleSubmit(values)
+            setSubmitting(false)
+          }}
+          validationSchema={Yup.object().shape({
+            firstName: Yup.string().required("This field is required"),
+            lastName: Yup.string().required("This field is required"),
+            patriarch: Yup.string().required("This field is required"),
+            stake: Yup.string().required("This field is required"),
+            blessing: Yup.string().required("This field is required")
+          })}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <Field type="text" name="firstName" placeholder="First Name" />
+              <ErrorMessage name="firstName" component="div" />
+              <Field type="text" name="middle" placeholder="Middle Name" />
+              <Field type="text" name="lastName" placeholder="Last Name" />
+              <ErrorMessage name="lastName" component="div" />
+              <div id="blessing-date-title">Blessing Date</div>
+              <Calendar locale="en" value={this.state.blessingDate} onChange={this.handleCalendarChange} />
+              <Field type="text" name="mother" placeholder="Mother's Full Name" />
+              <Field type="text" name="father" placeholder="Father's Full Name" />
+              <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
+              <ErrorMessage name="patriarch" component="div" />
+              <Field type="text" name="stake" placeholder="Stake" />
+              <ErrorMessage name="stake" component="div" />
 
-            <div className="input-field col s12 m4">
-              <input id="firstName" name="firstName" type="text" onChange={this.handleInputChange} required />
-              <label htmlFor="firstName">First Name</label>
-            </div>
-
-            <div className="input-field col s12 m4">
-              <input id="middleName" name="middleName" type="text" onChange={this.handleInputChange} />
-              <label htmlFor="middleName">Middle Name</label>
-            </div>
-
-            <div className="input-field col s12 m4">
-              <input id="lastName" name="lastName" type="text" onChange={this.handleInputChange} required />
-              <label htmlFor="lastName">Last Name</label>
-            </div>
-
-            <div className="col s12" id="blessing-date-title">
-              Blessing Date
-            </div>
-
-            <div className="col s12">
-              <div className="row">
-                <Calendar value={this.state.blessingDate} onChange={this.handleBlessingDateChange} locale="en" />
-              </div>
-            </div>
-
-            <div className="input-field col s12">
-              <input id="fatherName" name="fatherName" type="text" onChange={this.handleInputChange} />
-              <label htmlFor="fatherName">Father's Full Name</label>
-            </div>
-
-            <div className="input-field col s12">
-              <input id="motherName" name="motherName" type="text" onChange={this.handleInputChange} />
-              <label htmlFor="motherName">Mother's Full Name</label>
-            </div>
-
-            <div className="input-field col s12">
-              <input id="patriarchName" name="patriarchName" type="text" onChange={this.handleInputChange} required />
-              <label htmlFor="patriarchName">Patriarch's Full Name</label>
-            </div>
-
-            <div className="input-field col s12 m6">
-              <input id="stake" name="stake" type="text" onChange={this.handleInputChange} required />
-              <label htmlFor="stake">Stake or District</label>
-            </div>
-
-            <div className="col s12 m6">
               <div className="grey-text">Gender</div>
-              <label>
-                <Toggle id="gender-toggle"
-                  onChange={this.handleGenderChange}
-                  icons={{
-                    checked: <FontAwesomeIcon icon={faMars} color="white" />,
-                    unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
-                  }} />
-                <div>{this.state.gender}</div>
-              </label>
-            </div>
+              <Toggle
+                defaultChecked={false}
+                onChange={this.handleGenderChange}
+                icons={{
+                  checked: <FontAwesomeIcon icon={faMars} color="white" />,
+                  unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
+                }} />
+              <div>{this.state.gender}</div>
 
-            <div className="input-field col s12">
-              <textarea
-                id="blessing"
-                name="blessing"
-                className="materialize-textarea"
-                onChange={this.handleInputChange}
-                required></textarea>
-              <label htmlFor="blessing">Blessing text</label>
-              <span className="grey-text">Separate each paragraph with a new line.</span>
-            </div>
-
-          </div>
-          <div className="row">
-            <span className="blue-grey waves-effect waves-light btn col s12" onClick={this.handleSubmit}>Generate Document</span>
-          </div>
-        </form>
+              <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" />
+              <ErrorMessage name="blessing" component="div" />
+              <button className="btn btn-primary" type="submit" disabled={isSubmitting}>Generate Document</button>
+            </Form>
+          )}
+        </Formik>
       </div>
     )
   }
