@@ -96,7 +96,7 @@ export default class BlessingForm extends Component {
       parentage,
       blessingFirstLetter,
       blessing,
-      memberName,
+      memberTitle,
       blessingDate: dateString,
       template: 'en'
     }
