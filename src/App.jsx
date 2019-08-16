@@ -27,7 +27,6 @@ function App() {
       </nav>
 
       <div className="container center">
-        <h3>Please enter your patriarchal blessing information below.</h3>
         <BlessingForm />
       </div>
     </div>

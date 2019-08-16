@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Spinner from './Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars } from '@fortawesome/free-solid-svg-icons';
 import { faVenus } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +19,8 @@ export default class BlessingForm extends Component {
     this.state = {
       blessingDate: new Date(),
       gender: "Female",
-      downloadUrl: ""
+      downloadUrl: "",
+      appState: 'form'
     }
   }
 
@@ -26,13 +28,13 @@ export default class BlessingForm extends Component {
     let parentage = ","
     let father = fatherName !== ""
     let mother = motherName !== ""
-    let gender = this.state.gender === "Female" ? 'daughter' : 'son'
+    let gender = this.state.gender === "Female" ? ' daughter' : ' son'
 
     if (!father && !mother) {
       return ""
     }
     parentage += gender + " of "
-    parentage += father && mother ? fatherName + " y " + motherName : fatherName + motherName
+    parentage += father && mother ? fatherName + " and " + motherName : fatherName + motherName
     return parentage
   }
 
@@ -76,6 +78,11 @@ export default class BlessingForm extends Component {
     })
   }
   handleSubmit = async (values) => {
+    // set the app state to Loading
+    this.setState({
+      appState: 'loading'
+    })
+
     let fullName = values.middleName ?
       `${values.firstName} ${values.middle} ${values.lastName}` :
       `${values.firstName} ${values.lastName}`
@@ -102,82 +109,110 @@ export default class BlessingForm extends Component {
       template: 'en'
     }
 
-    //call out to API and return download link
-    const response = await Axios.post(
-      'https://api.restorerofpaths.com/patriarchal',
-      packet,
-      { headers: { 'Content-Type': 'application/json' } }
-    )
-
-    let respBody = JSON.parse(response.data.body)
-    this.setState({
-      downloadUrl: respBody.Location
-    })
+    try {
+      //call out to API and return download link
+      const response = await Axios.post(
+        'https://api.restorerofpaths.com/patriarchal',
+        packet,
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+      this.setState({
+        appState: 'success'
+      })
+      let respBody = JSON.parse(response.data.body)
+      this.setState({
+        downloadUrl: respBody.Location
+      })
+    } catch (error) {
+      this.setState({
+        appState: 'error'
+      })
+      console.log(error)
+    }
   }
 
   render() {
     return (
-      <div className="row">
-        <Formik
-          initialValues={{
-            firstName: '', middle: '', lastName: '',
-            mother: '', father: '',
-            patriarch: '', stake: '', blessing: ''
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            this.handleSubmit(values)
-            setSubmitting(false)
-          }}
-          validationSchema={Yup.object().shape({
-            firstName: Yup.string().required("This field is required"),
-            lastName: Yup.string().required("This field is required"),
-            patriarch: Yup.string().required("This field is required"),
-            stake: Yup.string().required("This field is required"),
-            blessing: Yup.string().required("This field is required")
-          })}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <Field type="text" name="firstName" placeholder="First Name" />
-              <ErrorMessage name="firstName" component="div" />
-              <Field type="text" name="middle" placeholder="Middle Name" />
-              <Field type="text" name="lastName" placeholder="Last Name" />
-              <ErrorMessage name="lastName" component="div" />
-              <div id="blessing-date-title">Blessing Date</div>
-              <Calendar locale="en" value={this.state.blessingDate} onChange={this.handleCalendarChange} />
-              <Field type="text" name="mother" placeholder="Mother's Full Name" />
-              <Field type="text" name="father" placeholder="Father's Full Name" />
-              <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
-              <ErrorMessage name="patriarch" component="div" />
-              <Field type="text" name="stake" placeholder="Stake" />
-              <ErrorMessage name="stake" component="div" />
+      <React.Fragment>
+        {this.state.appState === 'error' &&
+          <h4>Unfortunately, an error occurred. Please submit the form again or wait until later.</h4>
+        }
+        {/* Show the form if the app is initially loaded */}
+        {(this.state.appState === "form" || this.state.appState === "error") &&
+          <div className="row">
+            <h3>Please enter your patriarchal blessing information below.</h3>
+            <Formik
+              initialValues={{
+                firstName: '', middle: '', lastName: '',
+                mother: '', father: '',
+                patriarch: '', stake: '', blessing: ''
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                this.handleSubmit(values)
+                setSubmitting(false)
+              }}
+              validationSchema={Yup.object().shape({
+                firstName: Yup.string().required("This field is required"),
+                lastName: Yup.string().required("This field is required"),
+                patriarch: Yup.string().required("This field is required"),
+                stake: Yup.string().required("This field is required"),
+                blessing: Yup.string().required("This field is required")
+              })}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <Field type="text" name="firstName" placeholder="First Name" />
+                  <ErrorMessage name="firstName" component="div" />
+                  <Field type="text" name="middle" placeholder="Middle Name" />
+                  <Field type="text" name="lastName" placeholder="Last Name" />
+                  <ErrorMessage name="lastName" component="div" />
 
-              <div className="grey-text">Gender</div>
-              <Toggle
-                defaultChecked={false}
-                onChange={this.handleGenderChange}
-                icons={{
-                  checked: <FontAwesomeIcon icon={faMars} color="white" />,
-                  unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
-                }} />
-              <div>{this.state.gender}</div>
+                  <div className="grey-text">Gender</div>
+                  <Toggle
+                    defaultChecked={false}
+                    onChange={this.handleGenderChange}
+                    icons={{
+                      checked: <FontAwesomeIcon icon={faMars} color="white" />,
+                      unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
+                    }} />
+                  <div>{this.state.gender}</div>
 
-              <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" />
-              <ErrorMessage name="blessing" component="div" />
-              <button className="waves-effect waves-light btn blue-grey" type="submit" disabled={isSubmitting}>Generate Document</button>
-              {this.state.downloadUrl &&
-                <a
-                  className="waves-effect waves-light btn blue-grey"
-                  href={this.state.downloadUrl}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  Download Document
-                </a>
-              }
-            </Form>
-          )}
-        </Formik>
-      </div>
+                  <Field type="text" name="mother" placeholder="Mother's Full Name" />
+                  <Field type="text" name="father" placeholder="Father's Full Name" />
+                  <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
+                  <ErrorMessage name="patriarch" component="div" />
+                  <Field type="text" name="stake" placeholder="Stake" />
+                  <ErrorMessage name="stake" component="div" />
+
+
+                  <h5 id="blessing-date-title">Blessing Date</h5>
+                  <Calendar locale="en" value={this.state.blessingDate} onChange={this.handleCalendarChange} />
+                  <div className="input-field">
+                    <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" className="materialize-textarea" />
+                    <ErrorMessage name="blessing" component="div" />
+                  </div>
+
+                  <button className="waves-effect waves-light btn blue-grey" type="submit" disabled={isSubmitting}>Generate Document</button>
+                </Form>
+              )}
+            </Formik>
+          </div>}
+
+        {this.state.appState === 'loading' &&
+          <Spinner />
+        }
+
+        {/* Show download button if URL was successfully retrieved */}
+        {this.state.downloadUrl &&
+          <a
+            className="waves-effect waves-light btn blue-grey"
+            href={this.state.downloadUrl}
+            target="_blank"
+            rel="noopener noreferrer">
+            Download Document
+          </a>
+        }
+      </React.Fragment>
     )
   }
 }
