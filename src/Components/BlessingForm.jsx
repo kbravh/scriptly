@@ -135,7 +135,9 @@ export default class BlessingForm extends Component {
     return (
       <React.Fragment>
         {this.state.appState === 'error' &&
-          <h4>Unfortunately, an error occurred. Please submit the form again or wait until later.</h4>
+          <div className="errorBox z-depth-2" id="connectionError">
+            <h4>Unfortunately, an error occurred. Please submit the form again or wait until later.</h4>
+          </div>
         }
         {/* Show the form if the app is initially loaded */}
         {(this.state.appState === "form" || this.state.appState === "error") &&
@@ -162,10 +164,10 @@ export default class BlessingForm extends Component {
               {({ isSubmitting }) => (
                 <Form>
                   <Field type="text" name="firstName" placeholder="First Name" />
-                  <ErrorMessage name="firstName" component="div" />
+                  <ErrorMessage name="firstName" component="div" className="errorBox z-depth-2" />
                   <Field type="text" name="middle" placeholder="Middle Name" />
                   <Field type="text" name="lastName" placeholder="Last Name" />
-                  <ErrorMessage name="lastName" component="div" />
+                  <ErrorMessage name="lastName" component="div" className="errorBox z-depth-2"  />
 
                   <div className="grey-text">Gender</div>
                   <Toggle
@@ -180,16 +182,16 @@ export default class BlessingForm extends Component {
                   <Field type="text" name="mother" placeholder="Mother's Full Name" />
                   <Field type="text" name="father" placeholder="Father's Full Name" />
                   <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
-                  <ErrorMessage name="patriarch" component="div" />
+                  <ErrorMessage name="patriarch" component="div" className="errorBox z-depth-2"  />
                   <Field type="text" name="stake" placeholder="Stake" />
-                  <ErrorMessage name="stake" component="div" />
+                  <ErrorMessage name="stake" component="div" className="errorBox z-depth-2"  />
 
 
                   <h5 id="blessing-date-title">Blessing Date</h5>
                   <Calendar locale="en" value={this.state.blessingDate} onChange={this.handleCalendarChange} />
                   <div className="input-field">
                     <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" className="materialize-textarea" />
-                    <ErrorMessage name="blessing" component="div" />
+                    <ErrorMessage name="blessing" component="div" className="errorBox z-depth-2"  />
                   </div>
 
                   <button className="waves-effect waves-light btn blue-grey" type="submit" disabled={isSubmitting}>Generate Document</button>

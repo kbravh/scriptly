@@ -150,3 +150,17 @@
 #blessing-date-title {
     margin-bottom: 10px;
 }
+
+.errorBox {
+    background-color: rgba(255, 46, 46, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    h4{
+        margin: 0px;
+    }
+}
+
+#connectionError {
+    margin-top: 10px;
+}
