@@ -20,7 +20,7 @@ function App() {
       <nav>
         <div className="nav-wrapper">
           <div className="container">
-            <a href="/" className="brand-logo center hide-on-small-only"><FontAwesomeIcon icon={faBookOpen} /> Scripturely</a>
+            <a href="/" className="brand-logo center hide-on-small-only"><FontAwesomeIcon icon={faBookOpen} /> Scriptly</a>
             <a href="/" className="brand-logo center hide-on-med-and-up"><FontAwesomeIcon icon={faBookOpen} /></a>
             {/* <span className="sidenav-trigger right" data-target="language-menu">
               <FontAwesomeIcon icon={faLanguage} size="2x" />
