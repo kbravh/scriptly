@@ -1,3 +1,5 @@
+@import '../variables';
+
 // Toggle colors
 
 .react-toggle {
@@ -143,6 +145,18 @@
 }
 
 // Other styles
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom: 1px solid $secondary;
+    box-shadow: 0 1px 0 0 $secondary;
+}
+
+input[type=text]:not(.browser-default),
+textarea.materialize-textarea {
+    color: $text;
+}
+
 .react-calendar {
     margin: auto;
 }
@@ -152,7 +166,7 @@
 }
 
 .errorBox {
-    background-color: rgba(255, 46, 46, 0.3);
+    background-color: $secondary;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 15px;
@@ -163,4 +177,26 @@
 
 #connectionError {
     margin-top: 10px;
+}
+
+
+#toggleBox {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+div {
+    color: $text;
+}
+
+.btn {
+    background-color: $primary;
+    color: $text;
+}
+
+#download-button {
+    margin-top: 200px;
 }

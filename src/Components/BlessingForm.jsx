@@ -134,6 +134,9 @@ export default class BlessingForm extends Component {
   render() {
     return (
       <React.Fragment>
+        {this.state.appState === 'loading' &&
+          <Spinner />
+        }
         {this.state.appState === 'error' &&
           <div className="errorBox z-depth-2" id="connectionError">
             <h4>Unfortunately, an error occurred. Please submit the form again or wait until later.</h4>
@@ -141,7 +144,7 @@ export default class BlessingForm extends Component {
         }
         {/* Show the form if the app is initially loaded */}
         {(this.state.appState === "form" || this.state.appState === "error") &&
-          <div className="row">
+          <div>
             <h3>Please enter your patriarchal blessing information below.</h3>
             <Formik
               initialValues={{
@@ -163,56 +166,66 @@ export default class BlessingForm extends Component {
             >
               {({ isSubmitting }) => (
                 <Form>
-                  <Field type="text" name="firstName" placeholder="First Name" />
-                  <ErrorMessage name="firstName" component="div" className="errorBox z-depth-2" />
-                  <Field type="text" name="middle" placeholder="Middle Name" />
-                  <Field type="text" name="lastName" placeholder="Last Name" />
-                  <ErrorMessage name="lastName" component="div" className="errorBox z-depth-2"  />
+                  <div className="row">
+                    <div className="col s12 m6" style={{ padding: 0 }}>
+                      <Field type="text" name="firstName" placeholder="First Name" />
+                      <ErrorMessage name="firstName" component="div" className="errorBox z-depth-2" />
+                      <Field type="text" name="middle" placeholder="Middle Name" />
+                      <Field type="text" name="lastName" placeholder="Last Name" />
+                      <ErrorMessage name="lastName" component="div" className="errorBox z-depth-2" />
+                    </div>
 
-                  <div className="grey-text">Gender</div>
-                  <Toggle
-                    defaultChecked={false}
-                    onChange={this.handleGenderChange}
-                    icons={{
-                      checked: <FontAwesomeIcon icon={faMars} color="white" />,
-                      unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
-                    }} />
-                  <div>{this.state.gender}</div>
-
-                  <Field type="text" name="mother" placeholder="Mother's Full Name" />
-                  <Field type="text" name="father" placeholder="Father's Full Name" />
-                  <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
-                  <ErrorMessage name="patriarch" component="div" className="errorBox z-depth-2"  />
-                  <Field type="text" name="stake" placeholder="Stake" />
-                  <ErrorMessage name="stake" component="div" className="errorBox z-depth-2"  />
+                    <div className="col s12 m6" id="toggleBox">
+                      <h6>Gender</h6>
+                      <Toggle
+                        defaultChecked={false}
+                        onChange={this.handleGenderChange}
+                        icons={{
+                          checked: <FontAwesomeIcon icon={faMars} color="white" />,
+                          unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
+                        }} />
+                      <div>{this.state.gender}</div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <Field type="text" name="mother" placeholder="Mother's Full Name" />
+                    <Field type="text" name="father" placeholder="Father's Full Name" />
+                  </div>
+                  <div className="row">
+                    <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
+                    <ErrorMessage name="patriarch" component="div" className="errorBox z-depth-2" />
+                    <Field type="text" name="stake" placeholder="Stake or District" />
+                    <ErrorMessage name="stake" component="div" className="errorBox z-depth-2" />
+                  </div>
 
 
                   <h5 id="blessing-date-title">Blessing Date</h5>
                   <Calendar locale="en" value={this.state.blessingDate} onChange={this.handleCalendarChange} />
                   <div className="input-field">
                     <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" className="materialize-textarea" />
-                    <ErrorMessage name="blessing" component="div" className="errorBox z-depth-2"  />
+                    <ErrorMessage name="blessing" component="div" className="errorBox z-depth-2" />
                   </div>
 
-                  <button className="waves-effect waves-light btn blue-grey" type="submit" disabled={isSubmitting}>Generate Document</button>
+                  <button className="waves-effect waves-light btn" type="submit" disabled={isSubmitting}>Generate Document</button>
                 </Form>
               )}
             </Formik>
-          </div>}
-
-        {this.state.appState === 'loading' &&
-          <Spinner />
+          </div>
         }
 
         {/* Show download button if URL was successfully retrieved */}
         {this.state.downloadUrl &&
-          <a
-            className="waves-effect waves-light btn blue-grey"
-            href={this.state.downloadUrl}
-            target="_blank"
-            rel="noopener noreferrer">
-            Download Document
-          </a>
+          <div>
+            <h3>Your document is complete!</h3>
+            <a
+              className="waves-effect waves-light btn"
+              id="download-button"
+              href={this.state.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer">
+              Download Document
+            </a>
+          </div>
         }
       </React.Fragment>
     )
