@@ -39,19 +39,21 @@ export default class BlessingForm extends Component {
   }
 
   splitBlessing = (blessing) => {
-    // trim off initial and final whitespace, make sure there are only single new lines between paragraphs
-    let blessingTrimmed = blessing.trim().replace(/\n+/g, '\n')
+    // trim off initial and final whitespace, and remove new lines
+    let blessingTrimmed = blessing.trim().replace(/\n+/g, '')
     // extract first letter
     let firstLetter = blessingTrimmed.substr(0, 1)
     blessingTrimmed = blessingTrimmed.substring(1)
-    // split the verses on new lines
-    let verses = blessingTrimmed.split('\n')
-    // add verse numbers to all except first verse
+    // split the verses on periods
+    let verses = blessingTrimmed.split('.')
+    // remove the empty string at the end of the array
+    verses.pop()
+    // trim verse, add period, and add verse numbers to all except first verse
     verses = verses.map((verse, i) => {
       if (i === 0) {
-        return verse
+        return verse.trim() + '.'
       } else {
-        return i + 1 + '. ' + verse
+        return i + 1 + '. ' + verse.trim() + '.'
       }
     })
     return [firstLetter, verses];
