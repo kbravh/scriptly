@@ -143,7 +143,7 @@ export default class BlessingForm extends Component {
           </div>
         }
         {/* Show the form if the app is initially loaded */}
-        {(this.state.appState === "form" || this.state.appState === "error") &&
+        {(this.state.appState === "form" || this.state.appState === "error" || this.state.appState === "loading") &&
           <div>
             <h3>Please enter your patriarchal blessing information below.</h3>
             <Formik
