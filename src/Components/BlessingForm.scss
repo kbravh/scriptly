@@ -196,6 +196,14 @@ div {
     background-color: $primary;
     color: $text;
 }
+.btn:focus {
+    background-color: $secondary;
+    color: $text;
+}
+.btn:hover {
+    background-color: $tertiary;
+    color: $text;
+}
 
 #download-button {
     margin-top: 200px;
