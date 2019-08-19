@@ -2,6 +2,7 @@ import React from 'react';
 import BlessingForm from './Components/BlessingForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 // import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 
 import './App.scss'
@@ -19,6 +20,7 @@ function App() {
     <div className="App">
       <nav>
         <div className="nav-wrapper">
+          <a href="http://restorerofpaths.com" id="homeLogo" className="left"><FontAwesomeIcon icon={faHome} /></a>
           <div className="container">
             <a href="/" className="brand-logo center hide-on-small-only"><FontAwesomeIcon icon={faBookOpen} /> Scriptly</a>
             <a href="/" className="brand-logo center hide-on-med-and-up"><FontAwesomeIcon icon={faBookOpen} /></a>
