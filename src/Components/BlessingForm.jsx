@@ -10,6 +10,7 @@ import Toggle from 'react-toggle';
 import Axios from "axios";
 
 import './BlessingForm.scss';
+import DocPreview from "./DocPreview";
 
 const moment = require("moment");
 
@@ -20,7 +21,7 @@ export default class BlessingForm extends Component {
       blessingDate: new Date(),
       gender: "Female",
       downloadUrl: "",
-      appState: 'form'
+      appState: 'intro'
     }
   }
 
@@ -136,6 +137,14 @@ export default class BlessingForm extends Component {
   render() {
     return (
       <React.Fragment>
+        {this.state.appState === 'intro' &&
+          <div className="doc-preview-container">
+            <h3>Welcome to Scriptly!</h3>
+            <h4>Make your patriarchal blessing look like it was taken right out of the pages of the scriptures.</h4>
+            <DocPreview />
+            <button className="waves-effect waves-light btn" onClick={() => {this.setState({appState: 'form'})}}>Get Started</button>
+          </div>
+        }
         {this.state.appState === 'loading' &&
           <Spinner />
         }
