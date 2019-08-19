@@ -147,7 +147,7 @@
 // Other styles
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
-textarea.materialize-textarea:focus:not([readonly]){
+textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid $secondary;
     box-shadow: 0 1px 0 0 $secondary;
 }
@@ -155,6 +155,25 @@ textarea.materialize-textarea:focus:not([readonly]){
 input[type=text]:not(.browser-default),
 textarea.materialize-textarea {
     color: $text;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #e3dfde;
+    opacity: 0.5;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #e3dfde;
+    opacity: 0.5;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #e3dfde;
+    opacity: 0.5;
 }
 
 .react-calendar {
@@ -170,7 +189,8 @@ textarea.materialize-textarea {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 15px;
-    h4{
+
+    h4 {
         margin: 0px;
     }
 }
@@ -196,10 +216,12 @@ div {
     background-color: $primary;
     color: $text;
 }
+
 .btn:focus {
     background-color: $secondary;
     color: $text;
 }
+
 .btn:hover {
     background-color: $tertiary;
     color: $text;
@@ -209,7 +231,7 @@ div {
     margin-top: 200px;
 }
 
-.doc-preview-container{
+.doc-preview-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

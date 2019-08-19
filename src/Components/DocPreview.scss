@@ -1,35 +1,40 @@
 .doc-preview {
+    -webkit-filter: blur(0.5px);
+    -moz-filter: blur(0.5px);
+    -o-filter: blur(0.5px);
+    -ms-filter: blur(0.5px);
+    filter: blur(0.5px);
     margin: 30px 0px;
     width: 255px;
     height: 330px;
     background-color: white;
-    *{
+    * {
         color: black;
     }
 }
 
 .header {
     margin: 5px 10px;
+
     span {
         color: grey;
         font-size: 8px;
     }
 }
 
-.title{
+.title {
     font-family: 'Palatino';
     position: relative;
     font-size: 20px;
-    text-decoration: underline;
     margin-top: 30px;
 }
 
-.chapter-heading{
+.chapter-heading {
     font-family: 'Palatino';
     margin-left: 35px;
 }
 
-.book-intro{
+.book-intro {
     font-family: 'Palatino';
     font-size: 5px;
     margin: 5px 10px;
@@ -45,14 +50,16 @@
     column-rule-style: solid;
     column-rule-color: black;
     column-rule-width: 2px;
-    div{
+
+    div {
         font-family: 'Palatino';
         margin-bottom: 5px;
     }
+
     border-bottom: 1px;
     border-bottom-style: solid;
 }
 
-.first-letter{
+.first-letter {
     font-size: 10px;
 }
