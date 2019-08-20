@@ -9,7 +9,7 @@ import Toggle from 'react-toggle';
 import Axios from "axios";
 
 import './BlessingForm.scss';
-import DocPreview from "./DocPreview";
+import Intro from "./Intro";
 
 const moment = require("moment");
 
@@ -22,6 +22,12 @@ export default class BlessingForm extends Component {
       downloadUrl: "",
       appState: 'intro'
     }
+  }
+
+  updateState = state => {
+    this.setState({
+      appState: state
+    })
   }
 
   getParentage = (motherName, fatherName) => {
@@ -137,12 +143,7 @@ export default class BlessingForm extends Component {
     return (
       <React.Fragment>
         {this.state.appState === 'intro' &&
-          <div className="doc-preview-container">
-            <h3>Welcome to Scriptly!</h3>
-            <h4>Make your patriarchal blessing look like it was taken right out of the pages of the scriptures.</h4>
-            <DocPreview />
-            <button className="waves-effect waves-light btn" onClick={() => {this.setState({appState: 'form'})}}>Get Started</button>
-          </div>
+          <Intro updateState={this.updateState} />
         }
         {this.state.appState === 'loading' &&
           <Spinner />
