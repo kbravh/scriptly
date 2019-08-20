@@ -228,10 +228,17 @@ div {
 }
 
 #download-button {
-    margin-top: 200px;
+    margin-top: 30px;
 }
 
 .doc-preview-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#download-info {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

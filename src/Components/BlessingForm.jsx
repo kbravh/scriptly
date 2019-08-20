@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Spinner from './Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMars } from '@fortawesome/free-solid-svg-icons';
-import { faVenus } from '@fortawesome/free-solid-svg-icons';
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Calendar from 'react-calendar'
@@ -87,7 +86,7 @@ export default class BlessingForm extends Component {
     })
 
     let fullName = values.middleName ?
-      `${values.firstName} ${values.middle} ${values.lastName}` :
+      `${values.firstName} ${values.middleName} ${values.lastName}` :
       `${values.firstName} ${values.lastName}`
 
     let parentage = this.getParentage(values.mother, values.father)
@@ -159,7 +158,7 @@ export default class BlessingForm extends Component {
             <h3>Please enter your patriarchal blessing information below.</h3>
             <Formik
               initialValues={{
-                firstName: '', middle: '', lastName: '',
+                firstName: '', middleName: '', lastName: '',
                 mother: '', father: '',
                 patriarch: '', stake: '', blessing: ''
               }}
@@ -181,7 +180,7 @@ export default class BlessingForm extends Component {
                     <div className="col s12 m6" style={{ padding: 0 }}>
                       <Field type="text" name="firstName" placeholder="First Name" />
                       <ErrorMessage name="firstName" component="div" className="errorBox z-depth-2" />
-                      <Field type="text" name="middle" placeholder="Middle Name" />
+                      <Field type="text" name="middleName" placeholder="Middle Name" />
                       <Field type="text" name="lastName" placeholder="Last Name" />
                       <ErrorMessage name="lastName" component="div" className="errorBox z-depth-2" />
                     </div>
@@ -226,14 +225,13 @@ export default class BlessingForm extends Component {
 
         {/* Show download button if URL was successfully retrieved */}
         {this.state.downloadUrl &&
-          <div>
+          <div id="download-info">
             <h3>Your document is complete!</h3>
             <a
               className="waves-effect waves-light btn"
               id="download-button"
-              href={this.state.downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer">
+              download
+              href={this.state.downloadUrl}>
               Download Document
             </a>
           </div>
