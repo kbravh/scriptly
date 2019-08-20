@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Spinner from './Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
+import { faMars, faVenus, faStarOfLife } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Calendar from 'react-calendar'
@@ -210,6 +210,7 @@ export default class BlessingForm extends Component {
 
 
                   <h5 id="blessing-date-title">Blessing Date</h5>
+                  <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>Quick tip! You can quickly change the year and month on the calendar by clicking on the year in the top bar.</span></div>
                   <Calendar locale="en" value={this.state.blessingDate} onChange={this.handleCalendarChange} />
                   <div className="input-field">
                     <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" className="materialize-textarea" />
