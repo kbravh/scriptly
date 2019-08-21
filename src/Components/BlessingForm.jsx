@@ -10,6 +10,7 @@ import Axios from "axios";
 
 import './BlessingForm.scss';
 import Intro from "./Intro";
+import Download from "./Download";
 
 const moment = require("moment");
 
@@ -227,16 +228,7 @@ export default class BlessingForm extends Component {
 
         {/* Show download button if URL was successfully retrieved */}
         {this.state.downloadUrl &&
-          <div id="download-info">
-            <h3>Your document is complete!</h3>
-            <a
-              className="waves-effect waves-light btn"
-              id="download-button"
-              download
-              href={this.state.downloadUrl}>
-              Download Document
-            </a>
-          </div>
+          <Download downloadUrl={this.state.downloadUrl} />
         }
       </React.Fragment>
     )
