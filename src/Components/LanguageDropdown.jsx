@@ -47,7 +47,7 @@ class LanguageDropdownClass extends Component {
     }
 
     render() {
-        const { t } = this.props;
+        const { t, i18n } = this.props;
         return (
             <div className="dropdown-wrapper right">
                 <div className="dropdown-header" onClick={this.toggleDropdown}>
@@ -57,7 +57,7 @@ class LanguageDropdownClass extends Component {
                 {this.state.isToggleOpen &&
                     <ul className="dropdown-list">
                         {languageList.map(language => (
-                            <li className="dropdown-item" key={language.key} onClick={() => { this.handleLocaleChange(language.key) }}>{t(language.title)}</li>
+                            <li className="dropdown-item" key={language.key} onClick={() => { this.handleLocaleChange(language.key); i18n.changeLanguage(language.key); }}>{t(language.title)}</li>
                         ))}
                     </ul>
                 }
