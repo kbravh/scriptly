@@ -7,10 +7,11 @@ import Intro from "./Intro";
 import Download from "./Download";
 import BlessingForm from "./BlessingForm";
 import ConnectionError from "./ConnectionError";
+import { withTranslation } from "react-i18next";
 
 const moment = require("moment");
 
-export default class ContentContainer extends Component {
+class ContentContainerClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -19,8 +20,6 @@ export default class ContentContainer extends Component {
       downloadUrl: "",
       appState: 'intro'
     }
-    // eslint-disable-next-line
-    const { t, i18n } = this.props;
   }
 
   updateState = state => {
@@ -30,16 +29,17 @@ export default class ContentContainer extends Component {
   }
 
   getParentage = (motherName, fatherName) => {
+    const { t } = this.props;
     let parentage = ","
     let father = fatherName !== ""
     let mother = motherName !== ""
-    let gender = this.state.gender === "Female" ? ' daughter' : ' son'
+    let gender = this.state.gender === "Female" ? t(' daughter') : t(' son')
 
     if (!father && !mother) {
       return ""
     }
-    parentage += gender + " of "
-    parentage += father && mother ? fatherName + " and " + motherName : fatherName + motherName
+    parentage += gender + t(' of ')
+    parentage += father && mother ? fatherName + t(' and ') + motherName : fatherName + motherName
     return parentage
   }
 
@@ -65,7 +65,8 @@ export default class ContentContainer extends Component {
   }
 
   getMemberName = () => {
-    return this.state.gender === 'Female' ? ' Sister' : ' Brother'
+    const { t } = this.props;
+    return this.state.gender === 'Female' ? t(' Sister') : t(' Brother')
   }
 
   formatDate = () => {
@@ -102,6 +103,7 @@ export default class ContentContainer extends Component {
 
     let dateString = this.formatDate()
 
+    //TODO - Update template based on language chosen
     let packet = {
       firstName: values.firstName.toUpperCase(),
       lastName: values.lastName,
@@ -141,9 +143,9 @@ export default class ContentContainer extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.appState === 'intro' && <Intro updateState={this.updateState} /> }
-        {this.state.appState === 'loading' && <Spinner /> }
-        {this.state.appState === 'error' && <ConnectionError /> }
+        {this.state.appState === 'intro' && <Intro updateState={this.updateState} />}
+        {this.state.appState === 'loading' && <Spinner />}
+        {this.state.appState === 'error' && <ConnectionError />}
         {/* Show the form if the app is initially loaded */}
         {(this.state.appState === "form" || this.state.appState === "error" || this.state.appState === "loading") &&
           <BlessingForm
@@ -155,8 +157,11 @@ export default class ContentContainer extends Component {
           />
         }
         {/* Show download button if URL was successfully retrieved */}
-        {this.state.downloadUrl && <Download downloadUrl={this.state.downloadUrl} /> }
+        {this.state.downloadUrl && <Download downloadUrl={this.state.downloadUrl} />}
       </React.Fragment>
     )
   }
 }
+
+const ContentContainer = withTranslation()(ContentContainerClass);
+export default ContentContainer

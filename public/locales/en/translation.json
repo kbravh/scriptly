@@ -21,5 +21,10 @@
     "Gender": "Gender",
     "Female": "Female",
     "Male": "Male",
+    " daughter": " daughter",
+    " son": " son",
+    " of ": " of ",
+    " and ":" and ",
+    "Language":"Language",
     "An error occurred": "Unfortunately, an error occurred. Please submit the form again or wait until later."
 }

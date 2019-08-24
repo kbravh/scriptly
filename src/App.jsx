@@ -1,14 +1,14 @@
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import ContentContainer from './Components/ContentContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-// import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import Spinner from './Components/Spinner';
 
 import './App.scss'
 
 import { es } from "moment/locale/es";
+import LanguageDropdown from './Components/LanguageDropdown';
 const moment = require("moment");
 
 // load locales
@@ -26,10 +26,7 @@ function App() {
             <div className="container">
               <a href="/" className="brand-logo center hide-on-small-only"><FontAwesomeIcon icon={faBookOpen} /> Scriptly</a>
               <a href="/" className="brand-logo center hide-on-med-and-up"><FontAwesomeIcon icon={faBookOpen} /></a>
-              {/* <span className="sidenav-trigger right" data-target="language-menu">
-              <FontAwesomeIcon icon={faLanguage} size="2x" />
-              <span className="hide-on-small-only"> Language</span>
-            </span> */}
+              <LanguageDropdown />
             </div>
           </div>
         </nav>

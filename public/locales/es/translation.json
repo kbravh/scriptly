@@ -21,5 +21,10 @@
     "Gender": "Género",
     "Female": "Mujer",
     "Male": "Hombre",
+    " daughter": " hija",
+    " son": " hijo",
+    " of ": " de ",
+    " and ":" y ",
+    "Language":"Idioma",
     "An error occurred": "Desafortunadamente, ocurrió un error. Intenta otra vez o hazlo más tarde."
 }
