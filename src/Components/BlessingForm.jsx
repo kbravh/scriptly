@@ -13,7 +13,7 @@ const BlessingForm = props => {
 
   return (
     <div>
-      <h3>{t('Please enter your patriarchal blessing information below.')}</h3>
+      <h3>{t('Please enter your patriarchal blessing information below')}</h3>
       <Formik
         initialValues={{
           firstName: '', middleName: '', lastName: '',
@@ -44,7 +44,7 @@ const BlessingForm = props => {
               </div>
 
               <div className="col s12 m6" id="toggleBox">
-                <h6>Gender</h6>
+                <h6>{t('Gender')}</h6>
                 <Toggle
                   defaultChecked={false}
                   onChange={props.handleGenderChange}
@@ -68,7 +68,7 @@ const BlessingForm = props => {
 
 
             <h5 id="blessing-date-title">{t('Blessing Date')}</h5>
-            <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>{t('Quick tip! You can quickly change the year and month on the calendar by clicking on the year in the top bar.')}</span></div>
+            <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>{t('Quick tip')}</span></div>
             <Calendar locale="en" value={props.blessingDate} onChange={props.handleCalendarChange} />
             <div className="input-field">
               <Field component="textarea" name="blessing" placeholder={t('Patriarchal Blessing')} className="materialize-textarea" />

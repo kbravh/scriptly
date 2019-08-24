@@ -19,7 +19,7 @@ const Download = props => {
 
     return (
         <div style={styles.downloadInfo}>
-            <h3>{t('Your document is complete!')}</h3>
+            <h3>{t('Your document is complete')}</h3>
             <a
                 className="waves-effect waves-light btn"
                 style={styles.downloadButton}

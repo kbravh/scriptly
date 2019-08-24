@@ -7,7 +7,7 @@ const ConnectionError = () => {
 
     return (
         <div className="errorBox z-depth-2" id="connectionError">
-            <h4>{t('Unfortunately, an error occurred. Please submit the form again or wait until later.')}</h4>
+            <h4>{t('An error occurred')}</h4>
         </div>
     )
 }
