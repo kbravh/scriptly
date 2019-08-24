@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars, faVenus, faStarOfLife } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -8,8 +8,7 @@ import Calendar from 'react-calendar'
 import Toggle from 'react-toggle';
 
 const BlessingForm = props => {
-  // eslint-disable-next-line
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -69,7 +68,7 @@ const BlessingForm = props => {
 
             <h5 id="blessing-date-title">{t('Blessing Date')}</h5>
             <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>{t('Quick tip')}</span></div>
-            <Calendar locale="en" value={props.blessingDate} onChange={props.handleCalendarChange} />
+            <Calendar locale={props.locale} value={props.blessingDate} onChange={props.handleCalendarChange} />
             <div className="input-field">
               <Field component="textarea" name="blessing" placeholder={t('Patriarchal Blessing')} className="materialize-textarea" />
               <ErrorMessage name="blessing" component="div" className="errorBox z-depth-2" />

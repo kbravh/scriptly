@@ -149,6 +149,7 @@ class ContentContainerClass extends Component {
         {/* Show the form if the app is initially loaded */}
         {(this.state.appState === "form" || this.state.appState === "error" || this.state.appState === "loading") &&
           <BlessingForm
+            locale={this.props.locale}
             handleSubmit={this.handleSubmit}
             handleGenderChange={this.handleGenderChange}
             gender={this.state.gender}

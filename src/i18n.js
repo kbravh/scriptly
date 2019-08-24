@@ -26,5 +26,6 @@ i18n
         }
     });
 
+    i18n.changeLanguage(navigator.language)
 
 export default i18n;
