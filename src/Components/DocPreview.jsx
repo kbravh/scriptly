@@ -1,15 +1,19 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 import './DocPreview.scss';
 
 const DocPreview = () => {
+    // eslint-disable-next-line
+    const { t, i18n } = useTranslation();
+
     return (
         <div className="doc-preview z-depth-3">
             <div className="header">
                 <span className="left">Damon Greer</span>
-                <span className="right">Patriarchal Blessing</span>
+                <span className="right">{t('Patriarchal Blessing')}</span>
             </div>
-            <div className="title">THE BOOK OF DAMON</div>
+            <div className="title">{t('THE BOOK OF ')}DAMON</div>
             <p className="book-intro">
                 Blessing given by Henry Coulson, Patriarch of the Aurora Colorado stake to Damon Greer, son of Melissa Jane Deckow and Craig Wilson Greer, on October 16, 2005.
             </p>
