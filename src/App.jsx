@@ -1,5 +1,5 @@
 import React from 'react';
-import BlessingForm from './Components/BlessingForm';
+import ContentContainer from './Components/ContentContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +33,7 @@ function App() {
       </nav>
 
       <div className="container center">
-        <BlessingForm />
+        <ContentContainer />
       </div>
     </div>
   );
