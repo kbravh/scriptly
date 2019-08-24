@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 const styles = {
     downloadInfo: {
@@ -13,15 +14,18 @@ const styles = {
 }
 
 const Download = props => {
+    // eslint-disable-next-line
+    const { t, i18n } = useTranslation();
+
     return (
         <div style={styles.downloadInfo}>
-            <h3>Your document is complete!</h3>
+            <h3>{t('Your document is complete!')}</h3>
             <a
                 className="waves-effect waves-light btn"
                 style={styles.downloadButton}
                 download
                 href={props.downloadUrl}>
-                Download Document
+                {t('Download Document')}
             </a>
         </div>
     )
