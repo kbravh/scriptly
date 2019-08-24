@@ -14,7 +14,12 @@ const moment = require("moment");
 // load locales
 moment.locale('es', es)
 
-function App() {
+const App = () => {
+
+  const handleLocaleChange = locale => {
+    //update context
+    moment.locale(locale)
+  }
   // update this locale using hook
   moment.locale('en')
   return (
@@ -26,7 +31,7 @@ function App() {
             <div className="container">
               <a href="/" className="brand-logo center hide-on-small-only"><FontAwesomeIcon icon={faBookOpen} /> Scriptly</a>
               <a href="/" className="brand-logo center hide-on-med-and-up"><FontAwesomeIcon icon={faBookOpen} /></a>
-              <LanguageDropdown />
+              <LanguageDropdown handleLocaleChange={handleLocaleChange} />
             </div>
           </div>
         </nav>

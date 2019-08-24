@@ -3,11 +3,20 @@
     -moz-filter: blur(0.5px);
     -o-filter: blur(0.5px);
     -ms-filter: blur(0.5px);
+    /* Safari 3.1+ */
+    -webkit-user-select: none;
+    /* Firefox 2+ */
+    -moz-user-select: none;
+    /* IE 10+ */
+    -ms-user-select: none;
+    /* Standard syntax */
+    user-select: none;
     filter: blur(0.5px);
     margin: 30px 0px;
     width: 255px;
     height: 330px;
     background-color: white;
+
     * {
         color: black;
     }
