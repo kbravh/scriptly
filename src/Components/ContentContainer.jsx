@@ -5,6 +5,7 @@ import Axios from "axios";
 import './ContentContainer.scss';
 import Intro from "./Intro";
 import Download from "./Download";
+import BlessingForm from "./BlessingForm";
 import ConnectionError from "./ConnectionError";
 
 const moment = require("moment");
@@ -18,10 +19,11 @@ export default class ContentContainer extends Component {
       downloadUrl: "",
       appState: 'intro'
     }
+    // eslint-disable-next-line
+    const { t, i18n } = this.props;
   }
 
   updateState = state => {
-    console.info('State:', state)
     this.setState({
       appState: state
     })
@@ -144,7 +146,7 @@ export default class ContentContainer extends Component {
         {this.state.appState === 'error' && <ConnectionError /> }
         {/* Show the form if the app is initially loaded */}
         {(this.state.appState === "form" || this.state.appState === "error" || this.state.appState === "loading") &&
-          <ContentContainer
+          <BlessingForm
             handleSubmit={this.handleSubmit}
             handleGenderChange={this.handleGenderChange}
             gender={this.state.gender}

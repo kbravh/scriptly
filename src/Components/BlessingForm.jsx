@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars, faVenus, faStarOfLife } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -7,9 +8,12 @@ import Calendar from 'react-calendar'
 import Toggle from 'react-toggle';
 
 const BlessingForm = props => {
+  // eslint-disable-next-line
+  const { t, i18n } = useTranslation();
+
   return (
     <div>
-      <h3>Please enter your patriarchal blessing information below.</h3>
+      <h3>{t('Please enter your patriarchal blessing information below.')}</h3>
       <Formik
         initialValues={{
           firstName: '', middleName: '', lastName: '',
@@ -21,21 +25,21 @@ const BlessingForm = props => {
           setSubmitting(false)
         }}
         validationSchema={Yup.object().shape({
-          firstName: Yup.string().required("This field is required"),
-          lastName: Yup.string().required("This field is required"),
-          patriarch: Yup.string().required("This field is required"),
-          stake: Yup.string().required("This field is required"),
-          blessing: Yup.string().required("This field is required")
+          firstName: Yup.string().required(t('This field is required')),
+          lastName: Yup.string().required(t('This field is required')),
+          patriarch: Yup.string().required(t('This field is required')),
+          stake: Yup.string().required(t('This field is required')),
+          blessing: Yup.string().required(t('This field is required'))
         })}
       >
         {({ isSubmitting }) => (
           <Form>
             <div className="row">
               <div className="col s12 m6" style={{ padding: 0 }}>
-                <Field type="text" name="firstName" placeholder="First Name" />
+                <Field type="text" name="firstName" placeholder={t('First Name')} />
                 <ErrorMessage name="firstName" component="div" className="errorBox z-depth-2" />
-                <Field type="text" name="middleName" placeholder="Middle Name" />
-                <Field type="text" name="lastName" placeholder="Last Name" />
+                <Field type="text" name="middleName" placeholder={t('Middle Name')} />
+                <Field type="text" name="lastName" placeholder={t('Last Name')} />
                 <ErrorMessage name="lastName" component="div" className="errorBox z-depth-2" />
               </div>
 
@@ -48,30 +52,30 @@ const BlessingForm = props => {
                     checked: <FontAwesomeIcon icon={faMars} color="white" />,
                     unchecked: <FontAwesomeIcon icon={faVenus} color="white" />
                   }} />
-                <div>{this.state.gender}</div>
+                <div>{t(props.gender)}</div>
               </div>
             </div>
             <div className="row">
-              <Field type="text" name="mother" placeholder="Mother's Full Name" />
-              <Field type="text" name="father" placeholder="Father's Full Name" />
+              <Field type="text" name="mother" placeholder={t('Mother\'s Full Name')} />
+              <Field type="text" name="father" placeholder={t('Father\'s Full Name')} />
             </div>
             <div className="row">
-              <Field type="text" name="patriarch" placeholder="Patriarch's Full Name" />
+              <Field type="text" name="patriarch" placeholder={t('Patriarch\'s Full Name')} />
               <ErrorMessage name="patriarch" component="div" className="errorBox z-depth-2" />
-              <Field type="text" name="stake" placeholder="Stake or District" />
+              <Field type="text" name="stake" placeholder={t('Stake or District')} />
               <ErrorMessage name="stake" component="div" className="errorBox z-depth-2" />
             </div>
 
 
-            <h5 id="blessing-date-title">Blessing Date</h5>
-            <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>Quick tip! You can quickly change the year and month on the calendar by clicking on the year in the top bar.</span></div>
-            <Calendar locale="en" value={this.state.blessingDate} onChange={props.handleCalendarChange} />
+            <h5 id="blessing-date-title">{t('Blessing Date')}</h5>
+            <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>{t('Quick tip! You can quickly change the year and month on the calendar by clicking on the year in the top bar.')}</span></div>
+            <Calendar locale="en" value={props.blessingDate} onChange={props.handleCalendarChange} />
             <div className="input-field">
-              <Field component="textarea" name="blessing" placeholder="Patriarchal Blessing" className="materialize-textarea" />
+              <Field component="textarea" name="blessing" placeholder={t('Patriarchal Blessing')} className="materialize-textarea" />
               <ErrorMessage name="blessing" component="div" className="errorBox z-depth-2" />
             </div>
 
-            <button className="waves-effect waves-light btn" type="submit" disabled={isSubmitting}>Generate Document</button>
+            <button className="waves-effect waves-light btn" type="submit" disabled={isSubmitting}>{t('Generate Document')}</button>
           </Form>
         )}
       </Formik>
