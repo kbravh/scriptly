@@ -14,16 +14,33 @@
 .dropdown-header {
     display: flex;
     align-items: center;
+    min-height: 64px;
+}
+
+@media screen and (max-width: 992px) {
+    .dropdown-list {
+        right: 30px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .dropdown-header {
+        min-height: 56px;
+    }
+
+    .dropdown-list {
+        right: 20px;
+    }
 }
 
 .dropdown-list {
+    flex-direction: column;
     position: absolute;
     top: 50px;
     min-width: 100px;
     background-color: white;
     border-radius: 5px;
     display: flex;
-    flex-direction: column;
 }
 
 .dropdown-item {
