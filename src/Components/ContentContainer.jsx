@@ -17,7 +17,8 @@ class ContentContainerClass extends Component {
     this.state = {
       blessingDate: new Date(),
       gender: "Female",
-      downloadUrl: "",
+      docxDownloadUrl: "",
+      pdfDownloadUrl: "",
       appState: 'intro'
     }
   }
@@ -90,9 +91,7 @@ class ContentContainerClass extends Component {
   }
   handleSubmit = async (values) => {
     // set the app state to Loading
-    this.setState({
-      appState: 'loading'
-    })
+    this.updateState('loading')
 
     let fullName = values.middleName ?
       `${values.firstName} ${values.middleName} ${values.lastName}` :
@@ -117,22 +116,33 @@ class ContentContainerClass extends Component {
       blessing,
       memberTitle,
       blessingDate: dateString,
-      template: this.props.locale.substr(0,2) //Strip off the ending of the locale
+      template: this.props.locale.substr(0, 2) //Strip off the ending of the locale
     }
 
     try {
-      //call out to API and return download link
-      const response = await Axios.post(
+      //call out to API for docx link
+      const docxResponse = await Axios.post(
         'https://api.restorerofpaths.com/scriptly/docx',
         packet,
         { headers: { 'Content-Type': 'application/json', 'x-api-key': 'gKd0oWv9oa5sut9xpYQfJ5MwKk7ZHYsM9Iqn5HIB' } }
       )
+      let docxRespBody = JSON.parse(docxResponse.data.body)
+      const pdfResponse = await Axios.post(
+        'https://api.restorerofpaths.com/scriptly/pdf',
+        {
+          bucket: docxRespBody.Bucket,
+          srcKey: docxRespBody.key
+        },
+        { headers: { 'Content-Type': 'application/json', 'x-api-key': 'gKd0oWv9oa5sut9xpYQfJ5MwKk7ZHYsM9Iqn5HIB' } }
+      )
+      let pdfResponseBody = JSON.parse(pdfResponse.data.body)
+
+      this.setState({
+        docxDownloadUrl: docxRespBody.Location,
+        pdfDownloadUrl: pdfResponseBody.Location
+      })
       this.setState({
         appState: 'success'
-      })
-      let respBody = JSON.parse(response.data.body)
-      this.setState({
-        downloadUrl: respBody.Location
       })
     } catch (error) {
       this.setState({
@@ -160,7 +170,7 @@ class ContentContainerClass extends Component {
           />
         }
         {/* Show download button if URL was successfully retrieved */}
-        {this.state.downloadUrl && <Download downloadUrl={this.state.downloadUrl} />}
+        {(this.state.docxDownloadUrl && this.state.pdfDownloadUrl) && <Download docxDownloadUrl={this.state.docxDownloadUrl} pdfDownloadUrl={this.state.pdfDownloadUrl} />}
       </React.Fragment>
     )
   }

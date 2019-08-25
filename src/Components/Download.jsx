@@ -24,8 +24,15 @@ const Download = props => {
                 className="waves-effect waves-light btn"
                 style={styles.downloadButton}
                 download
-                href={props.downloadUrl}>
-                {t('Download Document')}
+                href={props.docxDownloadUrl}>
+                {t('Download Docx Document')}
+            </a>
+            <a
+                className="waves-effect waves-light btn"
+                style={styles.downloadButton}
+                download
+                href={props.pdfDownloadUrl}>
+                {t('Download PDF Document')}
             </a>
         </div>
     )
