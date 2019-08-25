@@ -23,6 +23,9 @@ class ContentContainerClass extends Component {
   }
 
   updateState = state => {
+    //scroll to top
+    window.scrollTo(0, 0)
+    // update app state
     this.setState({
       appState: state
     })
