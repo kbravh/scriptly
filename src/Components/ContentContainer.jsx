@@ -123,7 +123,7 @@ class ContentContainerClass extends Component {
     try {
       //call out to API and return download link
       const response = await Axios.post(
-        'https://api.restorerofpaths.com/patriarchal',
+        'https://api.restorerofpaths.com/scriptly/docx',
         packet,
         { headers: { 'Content-Type': 'application/json', 'x-api-key': 'gKd0oWv9oa5sut9xpYQfJ5MwKk7ZHYsM9Iqn5HIB' } }
       )
