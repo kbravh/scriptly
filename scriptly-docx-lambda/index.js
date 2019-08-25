@@ -3,7 +3,9 @@ exports.handler = async (event) => {
     AWS.config.update({
         region: 'us-east-1'
     })
-    var s3 = new AWS.S3({apiVersion: '2006-03-01'});
+    var s3 = new AWS.S3({
+        apiVersion: '2006-03-01'
+    });
 
     var PizZip = require('pizzip');
     var Docxtemplater = require('docxtemplater');
@@ -71,10 +73,10 @@ exports.handler = async (event) => {
 
     await uploadPromise.then(data => {
         console.log("Success!", data);
-        response =  {
-        statusCode: 200,
-        body: JSON.stringify(data)
-    }
+        response = {
+            statusCode: 200,
+            body: JSON.stringify(data)
+        }
     }).catch(err => {
         console.log(err)
     })

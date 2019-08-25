@@ -17,18 +17,18 @@ exports.convert = async function (jobId, docIn, formatOut) {
     try {
         // load docx into engine
         await engine.load(docIn);
-        log.debug(jobId + " loaded into docx_api "  );
+        log.debug(jobId + " loaded into docx_api ");
         // now export it
         var buffer;
-        if (formatOut==Format.DOCX) {
-            buffer=await engine.exportDOCX();
-        } else if (formatOut==Format.PDF) {
-            buffer=await engine.exportPDF();
+        if (formatOut == Format.DOCX) {
+            buffer = await engine.exportDOCX();
+        } else if (formatOut == Format.PDF) {
+            buffer = await engine.exportPDF();
         } else {
             throw new Error("Unsupported output format " + formatOut);
         }
         // close engine
-        await engine.close();    
+        await engine.close();
         return buffer;
     } catch (e) {
         await engine.close();
@@ -36,5 +36,5 @@ exports.convert = async function (jobId, docIn, formatOut) {
         // if (e) log.debug(e);
         // log.error("caught error loading "+srcKey);
     }
-            
+
 };
