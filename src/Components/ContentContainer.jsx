@@ -103,7 +103,6 @@ class ContentContainerClass extends Component {
 
     let dateString = this.formatDate()
 
-    //TODO - Update template based on language chosen
     let packet = {
       firstName: values.firstName.toUpperCase(),
       lastName: values.lastName,
@@ -115,7 +114,7 @@ class ContentContainerClass extends Component {
       blessing,
       memberTitle,
       blessingDate: dateString,
-      template: 'en'
+      template: this.props.locale.substr(0,2) //Strip off the ending of the locale
     }
 
     try {
