@@ -64,7 +64,7 @@ exports.handler = async (event) => {
     let uploadPromise = s3.upload({
         ACL: 'public-read',
         Bucket: 'patriarchal-files',
-        Key: `${event.fullName.replace(/\s/g, '')}-${time}.docx`,
+        Key: `${event.firstName}${event.lastName}-${time}.docx`,
         Body: buf,
         ContentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     }).promise();
