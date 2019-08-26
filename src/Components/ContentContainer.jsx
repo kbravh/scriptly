@@ -131,12 +131,11 @@ class ContentContainerClass extends Component {
         'https://api.restorerofpaths.com/scriptly/pdf',
         {
           bucket: docxRespBody.Bucket,
-          srcKey: docxRespBody.key
+          srcKey: docxRespBody.Key
         },
         { headers: { 'Content-Type': 'application/json', 'x-api-key': 'gKd0oWv9oa5sut9xpYQfJ5MwKk7ZHYsM9Iqn5HIB' } }
       )
       let pdfResponseBody = JSON.parse(pdfResponse.data.body)
-
       this.setState({
         docxDownloadUrl: docxRespBody.Location,
         pdfDownloadUrl: pdfResponseBody.Location
