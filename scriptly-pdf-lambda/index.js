@@ -15,6 +15,8 @@ if (process.env.DEPLOY_ENV !== 'PROD') {
     log.options.debug = true;
 }
 
+var outputAs = Format.PDF;
+
 var srcBucket = process.env.S3_BUCKET_INPUT;
 
 var dstBucket = process.env.S3_BUCKET_OUTPUT;
@@ -30,6 +32,7 @@ exports.handler = async function (event, context) {
 
     //destructure the srcKey out of the incoming request
     const {srcKey} = event;
+    log.info(`Data from the event: ${event.bucket}:${event.srcKey}`)
     //the destination file will have the same name with pdf extension
     const dstKey = srcKey.replace(/docx?/, 'pdf');
 
