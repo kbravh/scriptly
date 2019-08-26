@@ -34,7 +34,7 @@ exports.handler = async function (event, context) {
     const {srcKey} = event;
     log.info(`Data from the event: ${event.bucket}:${event.srcKey}`)
     //the destination file will have the same name with pdf extension
-    const dstKey = srcKey.replace(/docx?/, 'pdf');
+    var dstKey = srcKey.replace(/docx?/, 'pdf');
 
     if (!srcKey.endsWith('doc') && !srcKey.endsWith('docx')) {
         log.warn('Unsupported file type ' + srcKey);
