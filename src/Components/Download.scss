@@ -1,0 +1,19 @@
+.downloadInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.noticeBox {
+    background-color: rgba(69, 122, 201, 0.5);
+    max-width: 450px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px auto;
+}
+
+.downloadButton {
+    margin-top: 15px;
+    margin-bottom: 45px;
+}

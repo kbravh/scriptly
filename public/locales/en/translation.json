@@ -3,7 +3,8 @@
     "Make your patriarchal blessing look like it was taken right out of the pages of the scriptures": "Make your patriarchal blessing look like it was taken right out of the pages of the scriptures.",
     "Get Started": "Get Started",
     "Your document is complete": "Your document is complete!",
-    "Download Document": "Download Document",
+    "Download Docx Document": "Download Word Document",
+    "Download PDF Document": "Download PDF Document",
     "Patriarchal Blessing": "Patriarchal Blessing",
     "THE BOOK OF ": "THE BOOK OF ",
     "Please enter your patriarchal blessing information below": "Please enter your patriarchal blessing information below.",
@@ -28,5 +29,6 @@
     "Language":"Language",
     "English": "English",
     "Spanish": "Spanish",
+    "The PDF document may be missing certain style elements like lines and column dividers":"Heads up! The PDF document may be missing certain style elements like lines and column dividers.",
     "An error occurred": "Unfortunately, an error occurred. Please submit the form again or wait until later."
 }

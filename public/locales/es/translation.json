@@ -3,7 +3,8 @@
     "Make your patriarchal blessing look like it was taken right out of the pages of the scriptures": "Haz que tu bendición patriarchal se vea como una página de las escrituras.",
     "Get Started": "Empezar",
     "Your document is complete": "Tu documento está listo!",
-    "Download Document": "Descargar Documento",
+    "Download Docx Document": "Descargar Documento Word",
+    "Download PDF Document": "Descargar Documento PDF",
     "Patriarchal Blessing": "Bendición Patriarcal",
     "THE BOOK OF ": "EL LIBRO DE ",
     "Please enter your patriarchal blessing information below": "Ingresa la información de tu bendición patriarcal abajo.",
@@ -28,5 +29,6 @@
     "Language":"Idioma",
     "English": "Inglés",
     "Spanish": "Español",
+    "The PDF document may be missing certain style elements like lines and column dividers":"Aviso! Puede que le falte algunos elementos como líneas o divisores de columnas al documento PDF.",
     "An error occurred": "Desafortunadamente, ocurrió un error. Intenta otra vez o hazlo más tarde."
 }
