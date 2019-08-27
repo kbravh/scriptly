@@ -29,5 +29,6 @@
     "Language":"Idioma",
     "English": "Inglés",
     "Spanish": "Español",
+    "The PDF document may be missing certain style elements like lines and column dividers":"Aviso! Puede que le falte algunos elementos como líneas o divisores de columnas al documento PDF.",
     "An error occurred": "Desafortunadamente, ocurrió un error. Intenta otra vez o hazlo más tarde."
 }

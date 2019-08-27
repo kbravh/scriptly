@@ -1,39 +1,30 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-
-const styles = {
-    downloadInfo: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
-    downloadButton: {
-        marginTop: "30px"
-    }
-}
+import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileWord, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import './Download.scss';
 
 const Download = props => {
-    // eslint-disable-next-line
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
-        <div style={styles.downloadInfo}>
+        <div className="downloadInfo">
             <h3>{t('Your document is complete')}</h3>
+            <FontAwesomeIcon icon={faFileWord} size="3x" />
             <a
-                className="waves-effect waves-light btn"
-                style={styles.downloadButton}
+                className="waves-effect waves-light btn downloadButton"
                 download
                 href={props.docxDownloadUrl}>
                 {t('Download Docx Document')}
             </a>
+            <FontAwesomeIcon icon={faFilePdf} size="3x" />
             <a
-                className="waves-effect waves-light btn"
-                style={styles.downloadButton}
+                className="waves-effect waves-light btn downloadButton"
                 download
                 href={props.pdfDownloadUrl}>
                 {t('Download PDF Document')}
             </a>
+            <div className="noticeBox">{t('The PDF document may be missing certain style elements like lines and column dividers')}</div>
         </div>
     )
 }
