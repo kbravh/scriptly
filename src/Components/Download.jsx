@@ -21,6 +21,8 @@ const Download = props => {
             <a
                 className="waves-effect waves-light btn downloadButton"
                 download
+                target="_blank"
+                rel="noopener noreferrer"
                 href={props.pdfDownloadUrl}>
                 {t('Download PDF Document')}
             </a>
