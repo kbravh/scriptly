@@ -36,7 +36,7 @@ export default class App extends Component {
           <div className="App">
             <nav>
               <div className="nav-wrapper">
-                <a href="http://restorerofpaths.com" id="homeLogo" className="left"><FontAwesomeIcon icon={faHome} /></a>
+                <a href="http://laborforzion.com" id="homeLogo" className="left"><FontAwesomeIcon icon={faHome} /></a>
                 <div className="container">
                   <a href="/" className="brand-logo center hide-on-small-only"><FontAwesomeIcon icon={faBookOpen} /> Scriptly</a>
                   <a href="/" className="brand-logo center hide-on-med-and-up"><FontAwesomeIcon icon={faBookOpen} /></a>

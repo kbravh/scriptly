@@ -122,13 +122,13 @@ class ContentContainerClass extends Component {
     try {
       //call out to API for docx link
       const docxResponse = await Axios.post(
-        'https://api.restorerofpaths.com/scriptly/docx',
+        'https://api.laborforzion.com/scriptly/docx',
         packet,
         { headers: { 'Content-Type': 'application/json', 'x-api-key': 'gKd0oWv9oa5sut9xpYQfJ5MwKk7ZHYsM9Iqn5HIB' } }
       )
       let docxRespBody = JSON.parse(docxResponse.data.body)
       const pdfResponse = await Axios.post(
-        'https://api.restorerofpaths.com/scriptly/pdf',
+        'https://api.laborforzion.com/scriptly/pdf',
         {
           bucket: docxRespBody.Bucket,
           srcKey: docxRespBody.Key
