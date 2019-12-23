@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-scriptly-dev-140640-authRole",
+            "UnauthRoleArn": "arn:aws:iam::601083631942:role/amplify-scriptly-dev-140640-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::601083631942:role/amplify-scriptly-dev-140640-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-scriptly-dev-140640-deployment",
+            "UnauthRoleName": "amplify-scriptly-dev-140640-unauthRole",
+            "StackName": "amplify-scriptly-dev-140640",
+            "StackId": "arn:aws:cloudformation:us-east-1:601083631942:stack/amplify-scriptly-dev-140640/e8c22320-21d1-11ea-ab90-12da3ecd6186",
+            "AmplifyAppId": "d1249yblfybf1k"
+        },
+        "categories": {
+            "auth": {
+                "scriptlyc56229c7": {}
+            }
+        }
+    }
+}

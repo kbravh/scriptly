@@ -7,6 +7,7 @@ import Intro from "./Intro";
 import Download from "./Download";
 import BlessingForm from "./BlessingForm";
 import ConnectionError from "./ConnectionError";
+import Scan from './Scan'
 import { withTranslation } from "react-i18next";
 
 const moment = require("moment");
@@ -157,6 +158,7 @@ class ContentContainerClass extends Component {
         {this.state.appState === 'intro' && <Intro updateState={this.updateState} />}
         {this.state.appState === 'loading' && <Spinner />}
         {this.state.appState === 'error' && <ConnectionError />}
+        {this.state.appState === 'scan' && <Scan updateState={this.updateState} />}
         {/* Show the form if the app is initially loaded */}
         {(this.state.appState === "form" || this.state.appState === "error" || this.state.appState === "loading") &&
           <BlessingForm
@@ -166,6 +168,7 @@ class ContentContainerClass extends Component {
             gender={this.state.gender}
             handleCalendarChange={this.handleCalendarChange}
             blessingDate={this.state.blessingDate}
+            updateState={this.updateState}
           />
         }
         {/* Show download button if URL was successfully retrieved */}

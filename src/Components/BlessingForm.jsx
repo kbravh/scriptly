@@ -71,6 +71,7 @@ const BlessingForm = props => {
             <Calendar locale={props.locale} value={props.blessingDate} onChange={props.handleCalendarChange} />
             <div className="input-field">
               <Field component="textarea" name="blessing" placeholder={t('Patriarchal Blessing')} className="materialize-textarea" />
+              <button onClick={() => props.updateState('scan')}>Scan</button>
               <ErrorMessage name="blessing" component="div" className="errorBox z-depth-2" />
             </div>
 
