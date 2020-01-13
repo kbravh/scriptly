@@ -75,6 +75,7 @@ const BlessingForm = props => {
             </div>
 
             <button className="waves-effect waves-light btn" type="submit" disabled={isSubmitting}>{t('Generate Document')}</button>
+            <div className="noticeBox"><FontAwesomeIcon icon={faStarOfLife} /> <span>{t('30 seconds')}</span></div>
           </Form>
         )}
       </Formik>
