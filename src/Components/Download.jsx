@@ -26,7 +26,6 @@ const Download = props => {
                 href={props.pdfDownloadUrl}>
                 {t('Download PDF Document')}
             </a>
-            <div className="noticeBox">{t('The PDF document may be missing certain style elements like lines and column dividers')}</div>
         </div>
     )
 }
