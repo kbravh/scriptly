@@ -2,7 +2,8 @@ const AWS = require('aws-sdk')
 const log = require('lambda-log')
 const fs = require('fs')
 const {
-  convertTo
+  convertTo,
+  canBeConvertedToPDF
 } = require('@shelf/aws-lambda-libreoffice')
 const s3 = new AWS.S3()
 
@@ -32,9 +33,14 @@ exports.handler = async (event, context) => {
 
     // save the docx to file
     fs.writeFileSync('/tmp/document.docx', data)
+    log.info('Document saved to /tmp/document.docx')
 
     // convert the docx
-    let pdf = fs.readFileSync(convertTo('/tmp/document.docx', 'pdf'))
+    let pdfPath = await convertTo('document.docx', 'pdf')
+    log.info(`PDF path is ${pdfPath}`)
+
+    // read in pdf file
+    let pdf = fs.readFileSync(pdfPath)
 
     // upload the result to s3
     log.debug("uploading to s3 " + dstBucket);
@@ -42,8 +48,8 @@ exports.handler = async (event, context) => {
       ACL: 'public-read',
       Bucket: dstBucket,
       Key: dstKey,
-      Body: new Buffer(pdf, 'binary'),
-      ContentType: mimeType
+      Body: Buffer.from(pdf),
+      ContentType: 'application/pdf'
     }).promise();
 
     await uploadPromise.then(data => {
