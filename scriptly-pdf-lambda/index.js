@@ -31,7 +31,7 @@ exports.handler = async (event, context) => {
     }).promise();
 
     // save the docx to file
-    fs.writeFileSync('/tmp/document.docx', data.body.toString())
+    fs.writeFileSync('/tmp/document.docx', data)
 
     // convert the docx
     let pdf = fs.readFileSync(convertTo('/tmp/document.docx', 'pdf'))
