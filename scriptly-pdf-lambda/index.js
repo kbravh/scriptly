@@ -2,8 +2,7 @@ const AWS = require('aws-sdk')
 const log = require('lambda-log')
 const fs = require('fs')
 const {
-  convertTo,
-  canBeConvertedToPDF
+  convertTo
 } = require('@shelf/aws-lambda-libreoffice')
 const s3 = new AWS.S3()
 
@@ -26,13 +25,13 @@ exports.handler = async (event, context) => {
   let response;
   try {
     // get the docx
-    data = await s3.getObject({
+    let data = await s3.getObject({
       Bucket: srcBucket,
       Key: srcKey
     }).promise();
 
     // save the docx to file
-    fs.writeFileSync('/tmp/document.docx', data)
+    fs.writeFileSync('/tmp/document.docx', data.Body)
     log.info('Document saved to /tmp/document.docx')
 
     // convert the docx
