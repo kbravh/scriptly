@@ -8,6 +8,7 @@ import Download from "./Download";
 import BlessingForm from "./BlessingForm";
 import ConnectionError from "./ConnectionError";
 import { withTranslation } from "react-i18next";
+import {randomNum} from '../util'
 
 const moment = require("moment");
 
@@ -53,19 +54,27 @@ class ContentContainerClass extends Component {
     // extract first letter
     let firstLetter = blessingTrimmed.substr(0, 1)
     blessingTrimmed = blessingTrimmed.substring(1)
-    // split the verses on periods
-    let verses = blessingTrimmed.split('.')
-    // remove the empty string at the end of the array
-    verses.pop()
-    // trim verse, add period, and add verse numbers to all except first verse
-    verses = verses.map((verse, i) => {
+    // split the verses on punctuation
+    let verses = blessingTrimmed.match(/[^.!?]+[.!?]+/g)
+    // group sentences together to make longer verses
+    let longerVerses = [], index = 0
+    while(index < verses.length){
+      // grab a random number 2-3 for verse length
+      let random = randomNum(2,3)
+      //pull verses in, join, and add to array
+      longerVerses.push(verses.slice(index, index + random).join(' '))
+      // move down the array
+      index += random
+    }
+    // trim verse and add verse numbers to all except first verse
+    longerVerses = longerVerses.map((verse, i) => {
       if (i === 0) {
-        return verse.trim() + '.'
+        return verse.trim()
       } else {
-        return i + 1 + '. ' + verse.trim() + '.'
+        return i + 1 + '. ' + verse.trim()
       }
     })
-    return [firstLetter, verses];
+    return [firstLetter, longerVerses];
   }
 
   getMemberName = () => {

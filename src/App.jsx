@@ -45,7 +45,7 @@ export default class App extends Component {
               </div>
             </nav>
 
-            <div className="container center">
+            <div className="center">
               <ContentContainer locale={this.state.locale}/>
             </div>
           </div>
