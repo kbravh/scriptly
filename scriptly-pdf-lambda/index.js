@@ -16,6 +16,13 @@ exports.handler = async (event, context) => {
     srcKey
   } = event;
   log.info(`Data from the event: ${event.bucket}:${event.srcKey}`)
+
+  if(/.*docx$/.test(srcKey)){
+    return {
+      statusCode: 400,
+      err: `Invalid key`
+    }
+  }
   //the destination file will have the same name with pdf extension
   const dstKey = srcKey.replace(/docx?/, 'pdf');
 
@@ -28,9 +35,7 @@ exports.handler = async (event, context) => {
     let data = await s3.getObject({
       Bucket: srcBucket,
       Key: srcKey
-    }).promise().catch(err => {
-      throw err
-    });
+    }).promise();
 
     // save the docx to file
     fs.writeFileSync('/tmp/document.docx', data.Body)
