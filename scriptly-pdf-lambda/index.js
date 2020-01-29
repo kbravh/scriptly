@@ -28,7 +28,9 @@ exports.handler = async (event, context) => {
     let data = await s3.getObject({
       Bucket: srcBucket,
       Key: srcKey
-    }).promise();
+    }).promise().catch(err => {
+      throw err
+    });
 
     // save the docx to file
     fs.writeFileSync('/tmp/document.docx', data.Body)
@@ -61,7 +63,7 @@ exports.handler = async (event, context) => {
   } catch (err) {
     log.error(err)
     response = {
-      statusCode: 500,
+      statusCode: 400,
       body: JSON.stringify(err)
     }
   }
