@@ -11,9 +11,9 @@ const BlessingForm = props => {
   const { t } = useTranslation();
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: '90vw'}}>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', maxWidth: '90vw' }}>
       <h3>{t('Please enter your patriarchal blessing information below')}</h3>
-      <div style={{maxWidth: '700px', margin: '0 20px'}}>
+      <div style={{ maxWidth: '700px', margin: '0 20px' }}>
         <Formik
           initialValues={{
             firstName: '', middleName: '', lastName: '',
@@ -55,7 +55,7 @@ const BlessingForm = props => {
                 <div>{t(props.gender)}</div>
               </div>
 
-                <Field type="text" name="mother" placeholder={t('Mother\'s Full Name')} />
+              <Field type="text" name="mother" placeholder={t('Mother\'s Full Name')} />
 
               <Field type="text" name="father" placeholder={t('Father\'s Full Name')} />
 
